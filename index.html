@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f4f4f4;
+            transition: background 1s ease-in-out;
+        }
+
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .scenery {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 90vh;
+            background: url('istockphoto-517188688-612x612.jpg') no-repeat center center/cover;
+        }
+
+        #logoffBtn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            background: rgb(0, 153, 255);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #logoffBtn:hover {
+            background: darkred;
+        }
+
+        #widgetButton {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 15px;
+            padding: 10px 15px;
+            background: rgb(0, 153, 255);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #widgetButton:hover {
+            background: rgb(0, 139, 28);
+        }
+    </style>
+</head>
+
+<body>
+    <button id="logoffBtn" onclick="logoff()">Log Out</button>
+    <div class="login-container" id="loginForm">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button onclick="validateLogin()">Login</button>
+        <p id="error-msg" style="color: red; display: none;">Invalid credentials!</p>
+    </div>
+
+    <div class="scenery" id="sceneryView"></div>
+    <button id="widgetButton" onclick="toggleWidgetButton()">Click here for Support</button>
+
+    <script>
+        function validateLogin() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let errorMsg = document.getElementById("error-msg");
+
+            if (email === "nk" && password === "12345") {
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("sceneryView").style.display = "block";
+                document.getElementById("logoffBtn").style.display = "block";
+                document.getElementById("widgetButton").style.display = "block";
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+            } else {
+                errorMsg.style.display = "block";
+            }
+        }
+
+        function logoff() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("sceneryView").style.display = "none";
+            document.getElementById("logoffBtn").style.display = "none";
+            document.getElementById("widgetButton").style.display = "none";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            removeWidget();
+        }
+
+        function toggleWidgetButton() {
+            const button = document.getElementById("widgetButton");
+            if (button.textContent === "Click here for Support") {
+                button.textContent = "Click the Phone Icon to get Connected to BG Agent";
+                initializeWidget(); // Call your widget initialization function
+            }
+        }
+
+        function initializeWidget() {
+            // WidgetCode from Connect
+
+            
+  (function(w, d, x, id){
+    s=d.createElement('script');
+    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
+    s.async=1;
+    s.id=id;
+    d.getElementsByTagName('head')[0].appendChild(s);
+    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
+  })(window, document, 'amazon_connect', '580ad1dc-86a8-46be-8ae9-8b05216f4308');
+  amazon_connect('styles', { iconType: 'VOICE', openChat: { color: '#ffffff', backgroundColor: '#125416' }, closeChat: { color: '#ffffff', backgroundColor: '#3d5412'} });
+  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGV01tQzcyQzFNQkxSYzQzR1JXUktYQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNQlVQOXIwemFSbCs0K0JqaUFnRVFnQ3M0RkIxREtpN3hvMWNoenpMMXl6Qk1MWllWMmFCb09MbDU2a29oNk5hQVhYdkI0YlcxMFlGYjIwOXA6Om5SQWtMaGJlTE5IWFRDekp5VFNxUElFVDlEK3p0dTFjK1BBdCtmNFh6bVhIMmtja2VDMFZBQ2xrVkVIWVVVYitQekNwN2ZhYmtFSkdneWNQNGVmejg4QUNjZ2I3ZVFkVmhaakhmUHhRbUVmNHlkL21QcGZWZnhQZkNNeEw3U1BjNjc4YnV4M3phcEE0a1FuWnNXMGxwNjErWHNaWTVsRT0=');
+  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
+
+
+        }
+
+        function removeWidget() {
+            let widget = document.getElementById('amazon-connect-chat-widget');
+            if (widget) widget.remove();
+        }
+
+        window.addEventListener("pagehide", (event) => {
+            let iframe = document.getElementById("amazon-connect-chat-widget-iframe");
+            if (iframe && iframe.contentWindow && iframe.contentWindow.connect) {
+                iframe.contentWindow.connect.ChatSession.disconnect();
+            }
+        });
+    </script>
+</body>
+
+</html>
