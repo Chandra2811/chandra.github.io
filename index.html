@@ -118,8 +118,6 @@
 
 <div id="widgetButton">
     <button onclick="toggleWidgetButton(event)">Click here for Sales Support</button>
-    <button onclick="toggleWidgetButton(event)">Click here for Customer Service Support</button>
-    <button onclick="toggleWidgetButton(event)">Click here for Billing Support</button>
 </div>
 
     <script>
@@ -157,14 +155,6 @@
         button.textContent = "Click the Phone Icon to get Connected to Sales Agent";
         initializeSalesWidget();
     } 
-    else if (button.textContent.includes("Customer Service Support")) {
-        button.textContent = "Click the Phone Icon to get Connected to Customer Service Agent";
-        initializeCustomerServiceWidget();
-    } 
-    else if (button.textContent.includes("Billing Support")) {
-        button.textContent = "Click the Phone Icon to get Connected to Billing Agent";
-        initializeBillingWidget();
-    }
 }
 
         function initializeSalesWidget() {
@@ -184,33 +174,6 @@
 
         }
 
-        function initializeCustomerServiceWidget(){
-  (function(w, d, x, id){
-    s=d.createElement('script');
-    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-    s.async=1;
-    s.id=id;
-    d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', '5696be50-7759-4909-9342-432e6ec0adc4');
-  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdING1SUU5WY2V0d3BoLzVsckRPeEZ6QUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNMndiWnZJQU9ibHhtL1VBb0FnRVFnQ3N6MmViM3NHaWRRNC9ydDE3ZG16UHo2S0h3ekpoNmQxdzFJcE5IUm1yekhBdVY2YkJKLzFMck5HSXQ6OkdrcHpHd1FKditHY09PQkNneFIzOFJ6V1JQeUxZY3ZucG5WQTc5UDR1cFozVjYwcEpzdjk1VDBydGI5WloyUHhvWnp4MkZpLzhKZUxldU15WVdaOVlzMStKb0RTOGZzK1ZySmxxdzQ0d0ErejhzOXFhWEE4cFk0eEQ1a3dVeEh1MC9kNWtFdnV5NlBRcHgyOW1GS25Yak8wV2hjQ2V3cz0=');
-  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
-        }
-
-        function initializeBillingWidget(){
-  (function(w, d, x, id){
-    s=d.createElement('script');
-    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-    s.async=1;
-    s.id=id;
-    d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', '62a868ce-30c8-438e-a06e-4b3425e25320');
-  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdHY2dveWJ3TFNLd3ZnQ0haMUxkTk5CQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNMytPMnphaUd0dGYyblZrYkFnRVFnQ3Y5a1lvbWY0TXRBc2pkTHJKbXBYWFMyelBLRDRqNUVtWXlyTW5yNnVRMlE3amQydGsvSDBCNkl2K0w6OnZHT2pHRzdseWc2QUtFV1djSEU4YitXWDJHQmNpWXR3VXFnQVdzeTkrOHArQ3I1TkFTOEVVOHB0TlJGMS9tVGw4aWhwSTNaR0hOVGNHYi80ZCtTS0ZzUmtDbWJMZ3E5NHozRkhtSTE1VDV5cG8xUHcxb2FoRy9JcGk0UEpkblZkZjN6Mit2N1dUSzdMU1MxQ0hObncvUmxyZ3dWa25oVT0=');
-  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
-        }
 
         function removeWidget() {
             let widget = document.getElementById('amazon-connect-chat-widget');
