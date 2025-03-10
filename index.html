@@ -117,7 +117,7 @@
     <div class="scenery" id="sceneryView"></div>
 
 <div id="widgetButton">
-    <button onclick="toggleWidgetButton(event)">Click here for Sales Support</button>
+    <button onclick="toggleWidgetButton(event)">Click here for Support</button>
 </div>
 
     <script>
@@ -152,12 +152,12 @@
     const button = event.target; // Identify the specific button clicked
 
     if (button.textContent.includes("Sales Support")) {
-        button.textContent = "Click the Phone Icon to get Connected to Sales Agent";
+        button.textContent = "Click the Phone Icon to get Connected to the Agent";
         initializeSalesWidget();
     } 
 }
 
-        function initializeSalesWidget() {
+        function initializeWidget() {
             // WidgetCode from Connect
             (function(w, d, x, id){
     s=d.createElement('script');
