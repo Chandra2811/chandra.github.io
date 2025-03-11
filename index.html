@@ -159,19 +159,17 @@
 
         function initializeWidget() {
             // WidgetCode from Connect
-            (function(w, d, x, id){
+  (function(w, d, x, id){
     s=d.createElement('script');
     s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
     s.async=1;
     s.id=id;
     d.getElementsByTagName('head')[0].appendChild(s);
     w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', '7826415f-7e6e-4b3d-a5e0-707caeff0c73');
-  amazon_connect('styles', { iconType: 'VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdHdkg2amEveGViU3hpUHc2M3RXR05wQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNY0QwZVR1WUs5YjFvdk1PSUFnRVFnQ3NNZVFSVjBJUTZQeThFbGZWL0k5TzBPNDU1djR6cmVQdGhkc2VQMTRPelpsT3Q4dGVYZW9WdEJQRVA6OituV1Y1Znl0U2hsMzBRRm1qWTJKTm8yYVdJdUFJM3BacnVpMXdSaVZ3emNrc0VMQ0pkQUI1NlJMRkJFdDdkVG5OTVNveXlONGY1WDh3cXJ3MStCTnNhVm1QelZHS0hYYnI5eXFEMGZtODhrYkYrSkN5UW14ZVdlU1FlbTZ5RkpNQU9uRWtVOGFzMDk4cGprLzNONXVwOU9kaEQyOGh4Yz0=');
+  })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
+  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
+  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
   amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
-
-
         }
 
 
