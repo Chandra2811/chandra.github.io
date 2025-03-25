@@ -192,11 +192,9 @@
   function transitionToVoice() {
     let selectedOption = sessionStorage.getItem("selectedOption") || "unknown"; // Retrieve stored option
 
-    amazon_connect('contactAttributes', { "selectedOption": selectedOption });
-
-amazon_connect('startChatOrVoiceCall', { 
+   amazon_connect('startChatOrVoiceCall', { 
     mode: "VOICE",  
-    attributes: { "selectedOption": selectedOption } // Pass the attribute
+    attributes: { "selectedOption": selectedOption } // Ensure attribute is passed
 });
 
   }
