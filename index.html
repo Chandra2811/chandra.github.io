@@ -165,37 +165,44 @@
     s.async=1;
     s.id=id;
     d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
+    w[x] = w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
   })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
 
+  // Initialize Amazon Connect Chat with Voice Support
   amazon_connect('styles', { 
-    iconType: 'CHAT_VOICE', 
-    openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
-    closeChat: { color: '#ffffff', backgroundColor: '#123456'}
+      iconType: 'CHAT_VOICE', 
+      openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
+      closeChat: { color: '#ffffff', backgroundColor: '#123456' }
   });
 
   amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
 
   amazon_connect('supportedMessagingContentTypes', [ 
-    'text/plain', 
-    'text/markdown', 
-    'application/vnd.amazonaws.connect.message.interactive', 
-    'application/vnd.amazonaws.connect.message.interactive.response' 
+      'text/plain', 'text/markdown', 
+      'application/vnd.amazonaws.connect.message.interactive', 
+      'application/vnd.amazonaws.connect.message.interactive.response' 
   ]);
 
-  // Store selected option in session
-  function storeSelectedOption(option) {
-    sessionStorage.setItem("selectedOption", option); // Save in lowercase
-  }
+  // Capture the user's selected option from the chat widget
+  amazon_connect('onMessage', function(event) {
+      if (event.type === "MESSAGE" && event.contentType === "application/vnd.amazonaws.connect.message.interactive.response") {
+          let selectedOption = event.data.input.displayText;
+          sessionStorage.setItem("selectedOption", selectedOption);
+          console.log("Selected Option Stored: ", selectedOption);
+      }
+  });
 
-  // Function to pass attribute when transitioning from chat to voice
-  function transitionToVoice() {
-    let selectedOption = sessionStorage.getItem("selectedOption") || "unknown"; // Retrieve stored option
+  // Modify the Start a Call behavior to pass attributes
+  amazon_connect('onStartCall', function(event) {
+      let selectedOption = sessionStorage.getItem("selectedOption") || "No Selection";
+      console.log("Passing to Voice Call: ", selectedOption);
 
-   amazon_connect('startChatOrVoiceCall', { 
-    mode: "VOICE",  
-    attributes: { "selectedOption": selectedOption } // Ensure attribute is passed
-});
+      // Start the voice call while preserving attributes
+      amazon_connect('startChatOrVoiceCall', {
+          mode: "VOICE",
+          attributes: { "selectedOption": selectedOption }
+      });
+  });
 
   }
 
