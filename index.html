@@ -167,10 +167,49 @@
     d.getElementsByTagName('head')[0].appendChild(s);
     w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
   })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
-  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
+
+  amazon_connect('styles', { 
+    iconType: 'CHAT_VOICE', 
+    openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
+    closeChat: { color: '#ffffff', backgroundColor: '#123456'}
+  });
+
   amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
-  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
- }
+
+  amazon_connect('supportedMessagingContentTypes', [ 
+    'text/plain', 
+    'text/markdown', 
+    'application/vnd.amazonaws.connect.message.interactive', 
+    'application/vnd.amazonaws.connect.message.interactive.response' 
+  ]);
+
+  // Store the selected option when a user clicks on a button
+  function storeSelectedOption(option) {
+    sessionStorage.setItem("SelectedOption", option); // Save selected option for later use
+  }
+
+  // Function to initiate a voice call with the selected option
+  function startVoiceCall() {
+    let selectedOption = sessionStorage.getItem("SelectedOption") || "Unknown"; // Retrieve stored selection
+
+    if (connect && connect.agentApp) {
+      connect.agentApp.initiateVoiceContact({
+        destinationPhoneNumber: "+1234567890",  // Replace with actual Amazon Connect phone number
+        attributes: { "SelectedOption": selectedOption } // Pass selected option to Amazon Connect
+      });
+    } else {
+      console.error("Amazon Connect Streams API is not available.");
+    }
+  }
+
+  // Attach event listener to Start a Call button (ensure button exists in HTML)
+  document.addEventListener("DOMContentLoaded", function () {
+    let startCallButton = document.getElementById("startCallButton");
+    if (startCallButton) {
+      startCallButton.addEventListener("click", startVoiceCall);
+    }
+  });
+
 
 
         function removeWidget() {
