@@ -183,32 +183,26 @@
     'application/vnd.amazonaws.connect.message.interactive.response' 
   ]);
 
-  // Store the selected option when a user clicks on a button
+  // Store selected option in session
   function storeSelectedOption(option) {
-    sessionStorage.setItem("SelectedOption", option); // Save selected option for later use
+    sessionStorage.setItem("selectedOption", option); // Save in lowercase
   }
 
-  // Function to initiate a voice call with the selected option
-  function startVoiceCall() {
-    let selectedOption = sessionStorage.getItem("SelectedOption") || "Unknown"; // Retrieve stored selection
+  // Function to pass attribute when transitioning from chat to voice
+  function transitionToVoice() {
+    let selectedOption = sessionStorage.getItem("selectedOption") || "unknown"; // Retrieve stored option
 
-    if (connect && connect.agentApp) {
-      connect.agentApp.initiateVoiceContact({
-        destinationPhoneNumber: "+1234567890",  // Replace with actual Amazon Connect phone number
-        attributes: { "SelectedOption": selectedOption } // Pass selected option to Amazon Connect
-      });
-    } else {
-      console.error("Amazon Connect Streams API is not available.");
-    }
+    amazon_connect('contactAttributes', { "selectedOption": selectedOption }); // Ensure lowercase key
   }
 
-  // Attach event listener to Start a Call button (ensure button exists in HTML)
+  // Attach event listener to Start a Call button
   document.addEventListener("DOMContentLoaded", function () {
     let startCallButton = document.getElementById("startCallButton");
     if (startCallButton) {
-      startCallButton.addEventListener("click", startVoiceCall);
+      startCallButton.addEventListener("click", transitionToVoice);
     }
   });
+
 
 
 
