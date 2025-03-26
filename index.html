@@ -160,53 +160,16 @@
         function initializeWidget() {
             // WidgetCode from Connect
   (function(w, d, x, id){
-    s = d.createElement('script');
-    s.src = 'https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-    s.async = 1;
-    s.id = id;
+    s=d.createElement('script');
+    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
+    s.async=1;
+    s.id=id;
     d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] = w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
-
-  amazon_connect('styles', { 
-    iconType: 'CHAT_VOICE', 
-    openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
-    closeChat: { color: '#ffffff', backgroundColor: '#123456'} 
-  });
-
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
-
-  amazon_connect('supportedMessagingContentTypes', [
-    'text/plain', 
-    'text/markdown', 
-    'application/vnd.amazonaws.connect.message.interactive', 
-    'application/vnd.amazonaws.connect.message.interactive.response'
-  ]);
-
-  // Store selected option when user clicks a button in chat
-  function storeChatSelection(selectedOption) {
-    sessionStorage.setItem('selectedOption', selectedOption);
-  }
-
-  // Start voice call while retaining chat-selected attributes
-  function startVoiceCall() {
-    let selectedOption = sessionStorage.getItem('selectedOption') || "NotSet";
-    
-    amazon_connect('call', {
-      destinationPhoneNumber: "", // Leave empty for internal transfer
-      attributes: { "selectedOption": selectedOption } // Pass chat context
-    });
-  }
-
-  // Attach to chat messages (Modify this if needed based on UI)
-  document.addEventListener("click", function(event) {
-    if (event.target.classList.contains("chat-button")) { 
-      storeChatSelection(event.target.getAttribute("data-option"));
-    }
-    if (event.target.id === "startCallButton") { 
-      startVoiceCall();
-    }
-  });
+    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
+  })(window, document, 'amazon_connect', '220a5a14-eba5-4939-b382-0b10be3fcab5');
+  amazon_connect('styles', { iconType: 'VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
+  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdHU0dRMVJzZGs0VGZ4c0FwbkxkMUlzQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNMG5IaG1ocUJwSkt1QThSVUFnRVFnQ3RBN3pjUHdrQWRMRitsN0JUek12K1ZUSXI1MjY4Z2E3TFRhL05EOTh2VHhuN29zeDV1YkNhMittM0U6OkRHSVhsa2loMnV4cURaVklWd2pFMk5QWWlrMXVjd1ZRUUlQSlh5WitWNEVBajNhNjlCelprRXQyM0FLZm4rWU5WUXI1OUsyaUNFMWN4ZHFoZVNka2xDKzJSN0lUamxST2l0U2lMQzU5dFd1eHdJS3A3ODU3bDZwRzBocERUOW1Odlp0KytLdklpQ0RtUkdiajgwNlhGUk83VjZ0UDFpaz0=');
+  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
         }
 
 
