@@ -127,6 +127,7 @@
             let errorMsg = document.getElementById("error-msg");
 
             if (email === "nk" && password === "12345") {
+                 localStorage.setItem("username", email);
                 document.getElementById("loginForm").style.display = "none";
                 document.getElementById("sceneryView").style.display = "block";
                 document.getElementById("logoffBtn").style.display = "block";
@@ -157,28 +158,36 @@
     } 
 }
 
-        function initializeWidget() {
-            // WidgetCode from Connect
-  (function(w, d, x, id){
-    s=d.createElement('script');
-    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-    s.async=1;
-    s.id=id;
-    d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
+       function initializeWidget() {
+    (function(w, d, x, id){
+        s=d.createElement('script');
+        s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
+        s.async=1;
+        s.id=id;
+        d.getElementsByTagName('head')[0].appendChild(s);
+        w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
+    })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
 
-  // Assuming you get the username from your web app (replace with your actual method)
-  var username = localStorage.getItem("username") || "GuestUser"; // Example: Fetching from local storage
+    // Get username from local storage
+    var username = localStorage.getItem("username") || "GuestUser"; 
 
-  // Pass the username as a contact attribute
-  amazon_connect('customerMetadata', { username: username });
+    // Pass the username as a contact attribute
+    amazon_connect('customerMetadata', { username: username });
 
-  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
+    amazon_connect('styles', { 
+        iconType: 'CHAT_VOICE', 
+        openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
+        closeChat: { color: '#ffffff', backgroundColor: '#123456'} 
+    });
 
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2tx...');
-  
-  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
+    amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2tx...');
+    
+    amazon_connect('supportedMessagingContentTypes', [
+        'text/plain', 
+        'text/markdown', 
+        'application/vnd.amazonaws.connect.message.interactive', 
+        'application/vnd.amazonaws.connect.message.interactive.response'
+    ]);
 }
 
 
