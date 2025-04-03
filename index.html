@@ -99,13 +99,6 @@
         #widgetButton:hover {
             background: #218838;
         }
-
-        #loading {
-            display: none;
-            color: #555;
-            font-size: 14px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 
@@ -118,7 +111,6 @@
         <input type="password" id="password" placeholder="Enter your password" required>
         <button onclick="validateLogin()">Login</button>
         <p id="error-msg" style="color: red; display: none;">Invalid credentials!</p>
-        <p id="loading">Logging in...</p>
     </div>
 
     <div class="scenery" id="sceneryView"></div>
@@ -127,28 +119,21 @@
 
     <script>
         function validateLogin() {
-            let email = document.getElementById("email").value.trim();
-            let password = document.getElementById("password").value.trim();
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
             let errorMsg = document.getElementById("error-msg");
-            let loading = document.getElementById("loading");
 
-            errorMsg.style.display = "none";
-            loading.style.display = "block";
-
-            setTimeout(() => { // Simulate loading time
-                if (email === "nk" && password === "12345") {
-                    localStorage.setItem("username", email);
-                    document.getElementById("loginForm").style.display = "none";
-                    document.getElementById("sceneryView").style.display = "block";
-                    document.getElementById("logoffBtn").style.display = "block";
-                    document.getElementById("widgetButton").style.display = "block";
-                } else {
-                    errorMsg.style.display = "block";
-                }
-                loading.style.display = "none";
+            if (email === "nk" && password === "12345") {
+                localStorage.setItem("username", email);
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("sceneryView").style.display = "block";
+                document.getElementById("logoffBtn").style.display = "block";
+                document.getElementById("widgetButton").style.display = "block";
                 document.getElementById("email").value = "";
                 document.getElementById("password").value = "";
-            }, 1000);
+            } else {
+                errorMsg.style.display = "block";
+            }
         }
 
         function logoff() {
@@ -163,21 +148,22 @@
         }
 
         function initializeWidget() {
-            // Prevent re-initialization
-            if (document.getElementById("amazon-connect-chat-widget")) return;
+            if (document.getElementById("amazon-connect-chat-widget")) return; // Prevent duplicate widget loading
 
-            (function(w, d, x, id){
-                let s = d.createElement('script');
-                s.src = 'https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-                s.async = 1;
-                s.id = id;
-                d.getElementsByTagName('head')[0].appendChild(s);
-                w[x] = w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-            })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
+            let script = document.createElement('script');
+            script.src = 'https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
+            script.async = true;
+            script.onload = function () {
+                console.log("Amazon Connect script loaded.");
+                setupChatWidget();
+            };
+            document.head.appendChild(script);
+        }
 
-            let username = localStorage.getItem("username") || "GuestUser"; 
+        function setupChatWidget() {
+            let username = localStorage.getItem("username") || "GuestUser";
 
-            amazon_connect('customerMetadata', { username: username });
+            amazon_connect('customerMetadata', { userName: username });
 
             amazon_connect('styles', { 
                 iconType: 'CHAT_VOICE', 
@@ -185,7 +171,7 @@
                 closeChat: { color: '#ffffff', backgroundColor: '#123456'} 
             });
 
-            amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2tx...');
+            amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
             
             amazon_connect('supportedMessagingContentTypes', [
                 'text/plain', 
