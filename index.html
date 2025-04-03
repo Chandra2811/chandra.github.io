@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +12,7 @@
             font-family: Arial, sans-serif;
         }
 
-        body,
-        html {
+        body, html {
             width: 100%;
             height: 100vh;
             display: flex;
@@ -74,7 +72,7 @@
             top: 10px;
             right: 10px;
             padding: 10px 15px;
-            background: rgb(0, 153, 255);
+            background: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
@@ -91,7 +89,7 @@
             bottom: 20px;
             right: 15px;
             padding: 10px 15px;
-            /* background: rgb(0, 153, 255); */ 
+            background: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
@@ -99,13 +97,14 @@
         }
 
         #widgetButton:hover {
-            background: rgb(0, 139, 28);
+            background: #218838;
         }
     </style>
 </head>
 
 <body>
     <button id="logoffBtn" onclick="logoff()">Log Out</button>
+
     <div class="login-container" id="loginForm">
         <h2>Login</h2>
         <input type="email" id="email" placeholder="Enter your email" required>
@@ -116,9 +115,7 @@
 
     <div class="scenery" id="sceneryView"></div>
 
-<div id="widgetButton">
-    <button onclick="toggleWidgetButton(event)">Click here for Support</button>
-</div>
+    <button id="widgetButton" onclick="initializeWidget()">Click here for Support</button>
 
     <script>
         function validateLogin() {
@@ -127,6 +124,7 @@
             let errorMsg = document.getElementById("error-msg");
 
             if (email === "nk" && password === "12345") {
+                localStorage.setItem("username", email);
                 document.getElementById("loginForm").style.display = "none";
                 document.getElementById("sceneryView").style.display = "block";
                 document.getElementById("logoffBtn").style.display = "block";
@@ -139,6 +137,7 @@
         }
 
         function logoff() {
+            localStorage.removeItem("username"); // Clear username from storage
             document.getElementById("loginForm").style.display = "block";
             document.getElementById("sceneryView").style.display = "none";
             document.getElementById("logoffBtn").style.display = "none";
@@ -148,36 +147,49 @@
             removeWidget();
         }
 
-        function toggleWidgetButton(event) {
-    const button = event.target; // Identify the specific button clicked
+        function initializeWidget() {
+            // Prevent re-initialization
+            if (document.getElementById("amazon-connect-chat-widget")) {
+                return;
+            }
 
-    if (button.textContent.includes("Support")) {
-        button.textContent = "Click the Phone Icon to get Connected to the Agent";
-        initializeWidget();
-    } 
-}
+            (function(w, d, x, id){
+                let s = d.createElement('script');
+                s.src = 'https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
+                s.async = 1;
+                s.id = id;
+                d.getElementsByTagName('head')[0].appendChild(s);
+                w[x] = w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
+            })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
 
-       function initializeWidget() {
-  (function(w, d, x, id){
-    s=d.createElement('script');
-    s.src='https://db08fjupg2abb.cloudfront.net/amazon-connect-chat-interface-client.js';
-    s.async=1;
-    s.id=id;
-    d.getElementsByTagName('head')[0].appendChild(s);
-    w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
-  })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
-  amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
-  amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNTkwwUUExTHNJV1QyaHRVNkFnRVFnQ3QyNXM3NXFmRFRKNEQ1RDJ2VnpxWUUxeUcxcmJYZ29DTzFJRzBuc3J0L0lCYlcvMW9zckpmR2NPKzM6OmpNVDhWazVFQ0JucTIySzRPTFJOQlNsVTVZVWd6TWNMNnhuNEpYWkplcnhrNGlYdlFCdFZDU0ZyajJycmRaaU4ybHR0OHJ6b01MM1VCR0FvdU12ZmN5cnBFSUtmNVZENnY2VWtDcHN0S2JyUmhKM201M2ZYVzZzQ1pHUktIVDlYTjU0bHNGb3I5UEN6Z3lzWjhtMHI1TW05NFNoalNkST0=');
-  amazon_connect('supportedMessagingContentTypes', [ 'text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response' ]);
-}
+            // Get username from local storage
+            var username = localStorage.getItem("username") || "GuestUser"; 
 
+            // Pass the username as a contact attribute
+            amazon_connect('customerMetadata', { userName: username });
+
+            amazon_connect('styles', { 
+                iconType: 'CHAT_VOICE', 
+                openChat: { color: '#ffffff', backgroundColor: '#123456' }, 
+                closeChat: { color: '#ffffff', backgroundColor: '#123456'} 
+            });
+
+            amazon_connect('snippetId', 'QVFJREFIZ2ZYaENvQWJCb1ZtYmxRNlFMNVJYMlhab3BKY1p0RnRGQ2pJNGhxdnBvemdGUUpFL2RMbzhlOUtTOS9tV1cwSDdrQUFBQWJqQnNCZ2tx...');
+            
+            amazon_connect('supportedMessagingContentTypes', [
+                'text/plain', 
+                'text/markdown', 
+                'application/vnd.amazonaws.connect.message.interactive', 
+                'application/vnd.amazonaws.connect.message.interactive.response'
+            ]);
+        }
 
         function removeWidget() {
             let widget = document.getElementById('amazon-connect-chat-widget');
             if (widget) widget.remove();
         }
 
-        window.addEventListener("pagehide", (event) => {
+        window.addEventListener("pagehide", () => {
             let iframe = document.getElementById("amazon-connect-chat-widget-iframe");
             if (iframe && iframe.contentWindow && iframe.contentWindow.connect) {
                 iframe.contentWindow.connect.ChatSession.disconnect();
@@ -185,5 +197,4 @@
         });
     </script>
 </body>
-
 </html>
