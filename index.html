@@ -157,7 +157,7 @@
     w[x] =  w[x] || function() { (w[x].ac = w[x].ac || []).push(arguments) };
   })(window, document, 'amazon_connect', 'f6bc30ae-c6de-4026-83a2-dc56ff88efaa');
  amazon_connect('contactAttributes', {
-   'HostedWidget-userName': document.getElementById("email").value
+   'userName': email
 });
 
   amazon_connect('styles', { iconType: 'CHAT_VOICE', openChat: { color: '#ffffff', backgroundColor: '#123456' }, closeChat: { color: '#ffffff', backgroundColor: '#123456'} });
